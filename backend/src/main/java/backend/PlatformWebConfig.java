@@ -1,6 +1,7 @@
 package backend;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -15,5 +16,16 @@ public class PlatformWebConfig implements WebMvcConfigurer {
     }
     @Override public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(audit).addPathPatterns("/api/**");
+    }
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("https://frontend-five-self-66.vercel.app", "http://localhost:5173")
+                .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "HEAD")
+                .allowedHeaders("*")
+                .exposedHeaders("Authorization", "Set-Cookie")
+                .allowCredentials(true)
+                .maxAge(3600);
     }
 }
