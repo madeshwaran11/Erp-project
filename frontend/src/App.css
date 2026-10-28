@@ -1,0 +1,132 @@
+
+@layer legacy {
+.app-loading {
+  display: flex;
+  min-height: 100dvh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  background:
+    radial-gradient(circle at 18% 8%, rgba(157, 102, 244, 0.2), transparent 38%),
+    radial-gradient(circle at 84% 96%, rgba(209, 184, 250, 0.14), transparent 38%),
+    radial-gradient(circle at 55% 108%, rgba(112, 34, 238, 0.1), transparent 42%),
+    radial-gradient(rgba(157, 102, 244, 0.1) 1px, transparent 1px),
+    linear-gradient(155deg, #fdfbff, #f5effe 58%, #fbf8ff);
+  background-size: auto, auto, auto, 25px 25px, auto;
+  color: #71559d;
+  font-size: 13px;
+}
+
+.app-loading::before {
+  content: "";
+  width: 92px;
+  height: 92px;
+  border: 1px solid rgba(197, 166, 247, 0.68);
+  border-radius: 24px;
+  box-shadow: 0 26px 64px rgba(87, 41, 160, 0.18), inset 0 1px 0 #ffffff;
+  background: rgba(255, 255, 255, 0.84) url("/brand/priyonix-mark.jpg") center / 78px no-repeat;
+  backdrop-filter: blur(16px);
+}
+
+.app-loading:has(.brand-loader)::before {
+  display: none;
+}
+
+.auth-recovery {
+  display: grid;
+  place-items: center;
+  min-height: 100dvh;
+  padding: 24px;
+  background:
+    radial-gradient(circle at 14% 4%, rgba(157, 102, 244, 0.2), transparent 38%),
+    radial-gradient(circle at 92% 100%, rgba(209, 184, 250, 0.14), transparent 38%),
+    radial-gradient(circle at 60% 108%, rgba(112, 34, 238, 0.1), transparent 42%),
+    radial-gradient(rgba(157, 102, 244, 0.1) 1px, transparent 1px),
+    linear-gradient(155deg, #fdfbff, #f5effe 58%, #fbf8ff);
+  background-size: auto, auto, auto, 25px 25px, auto;
+}
+
+.auth-recovery-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: min(480px, 100%);
+  padding: 41px 33px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.92);
+  border-radius: 23px;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(255, 255, 255, 0.98), transparent 38%),
+    linear-gradient(148deg, rgba(255, 255, 255, 0.98), rgba(246, 241, 254, 0.94));
+  box-shadow:
+    0 38px 100px rgba(87, 41, 160, 0.18),
+    0 3px 8px rgba(87, 41, 160, 0.06),
+    inset 0 1px 0 #ffffff;
+  text-align: center;
+  backdrop-filter: blur(24px);
+}
+
+.auth-recovery-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 4px;
+  background: linear-gradient(90deg, #7125eb, #8346e5 54%, #8b5cf6);
+}
+
+.auth-recovery-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.auth-recovery-mark {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 18px;
+  box-shadow:
+    0 16px 32px rgba(47, 16, 96, 0.2),
+    inset 0 1px 0 #ffffff;
+}
+
+.auth-recovery-card h1 {
+  color: var(--navy);
+  font-size: 28px;
+  line-height: 1.25;
+  letter-spacing: -0.7px;
+}
+
+.auth-recovery-card p {
+  color: var(--text-secondary);
+  font-size: 13.5px;
+  line-height: 1.7;
+}
+
+.auth-recovery-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+@media (max-width: 480px) {
+  .auth-recovery-card {
+    padding: 32px 24px;
+    border-radius: 18px;
+  }
+
+  .auth-recovery-actions {
+    width: 100%;
+  }
+
+  .auth-recovery-actions > * {
+    width: 100%;
+  }
+}
+}

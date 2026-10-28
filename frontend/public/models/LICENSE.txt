@@ -1,0 +1,12 @@
+Harper - Idle Standing
+Source: Innerscene, adapted from MakeHuman/MPFB CC0 assets.
+https://www.innerscene.com/tools/library/3d-parts/idle-standing-harper-3d-person-animated-ba9bc23f
+License: CC0 1.0 Universal, https://creativecommons.org/publicdomain/zero/1.0/
+Retrieved: 27 October 2026.
+
+Supplied asset has one genuine authored animation: Idle_Standing, six seconds.
+The source describes procedural authored motion, not motion capture.
+No waving, pointing, speaking or walking clips are included in this asset.
+Local changes: textures resized to at most 1024 pixels and recompressed;
+hair and fabric colors adjusted in the renderer; static WebP rendered from the GLB.
+Geometry, rig and animation data are preserved.
