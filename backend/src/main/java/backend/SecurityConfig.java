@@ -149,6 +149,7 @@ public class SecurityConfig {
                         .hasRole(UserRoles.ADMIN)
                 // Workspace controllers additionally enforce module and record ownership rules.
                 .anyRequest().authenticated())
+            .addFilterBefore(corsFilter(), org.springframework.security.web.header.HeaderWriterFilter.class)
             .addFilterBefore(
                 jwtAuthenticationFilter,
                 UsernamePasswordAuthenticationFilter.class);
