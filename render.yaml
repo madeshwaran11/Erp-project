@@ -24,7 +24,7 @@ services:
       - key: ADMIN_RESET_PASSWORD
         value: false
       - key: CORS_ALLOWED_ORIGINS
-        value: https://frontend-five-self-66.vercel.app,https://frontend-jesr8bvlm-madeshwaran1101-gmailcoms-projects.vercel.app
+        sync: false
       - key: AUTH_REFRESH_COOKIE_SECURE
         value: true
       - key: AUTH_REFRESH_COOKIE_SAME_SITE
@@ -34,25 +34,27 @@ services:
       - key: ROLE_MIGRATION_ENABLED
         value: true
       - key: JWT_SECRET
-        value: +b4QpCtgHbatXzd2+9E8ZS9DME6vh0Ez8l9zRLM9Xrq8QblYXQqfWDmrd4MtMJNP
+        sync: false
       - key: ADMIN_EMAIL
-        value: madeshwaran1101@gmail.com
+        sync: false
       - key: ADMIN_PASSWORD
-        value: Madeshwaran@1101
+        sync: false
       - key: MONGODB_URI
-        value: mongodb+srv://priyonix:Madeshwaran@e-commerce.echgxpy.mongodb.net/
+        sync: false
+      - key: MONGODB_DATABASE
+        value: priyonix
       - key: MAIL_HOST
         value: smtp.gmail.com
       - key: MAIL_PORT
         value: 587
       - key: MAIL_USERNAME
-        value: karnanmadeshwaran@gmail.com
+        sync: false
       - key: MAIL_PASSWORD
-        value: sndyictmwviqrdru
+        sync: false
       - key: MAIL_FROM
-        value: karnanmadeshwaran@gmail.com
+        sync: false
       - key: MAIL_RESET_LINK_BASE
-        value: https://frontend-five-self-66.vercel.app
+        sync: false
       - key: MAIL_SMTP_AUTH
         value: true
       - key: MAIL_SMTP_STARTTLS
