@@ -171,6 +171,7 @@ public class SecurityConfig {
             config.setAllowedOriginPatterns(List.of("*"));
             config.setAllowCredentials(false);
         } else {
+            config.setAllowedOriginPatterns(allowedOrigins);
             config.setAllowedOrigins(allowedOrigins);
             // Credentials are required for the HttpOnly refresh cookie that
             // backs the "Remember me" option. Must use exact origins, not wildcard.
