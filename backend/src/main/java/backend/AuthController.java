@@ -64,6 +64,19 @@ import org.springframework.web.bind.annotation.RestController;
                 org.springframework.web.bind.annotation.RequestMethod.OPTIONS})
 public class AuthController {
 
+    @org.springframework.web.bind.annotation.RequestMapping(method = org.springframework.web.bind.annotation.RequestMethod.OPTIONS, value = {"/login", "/refresh", "/logout", "/forgot-password", "/reset-password", "/me", "/admin/reset-password"})
+    public org.springframework.http.ResponseEntity<Void> handleOptions(jakarta.servlet.http.HttpServletRequest request, jakarta.servlet.http.HttpServletResponse response) {
+        String origin = request.getHeader("Origin");
+        if (origin != null && (origin.equals("https://frontend-five-self-66.vercel.app") || origin.equals("http://localhost:5173"))) {
+            response.setHeader("Access-Control-Allow-Origin", origin);
+        }
+        response.setHeader("Access-Control-Allow-Credentials", "true");
+        response.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE,OPTIONS,HEAD");
+        response.setHeader("Access-Control-Allow-Headers", "Authorization,Content-Type,Accept,Origin,X-Requested-With");
+        response.setHeader("Access-Control-Max-Age", "3600");
+        return org.springframework.http.ResponseEntity.ok().build();
+    }
+
     private static final Logger LOG =
             LoggerFactory.getLogger(AuthController.class);
 
