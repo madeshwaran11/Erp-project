@@ -41,15 +41,23 @@ public class SecurityConfig {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
 
         // Comma-separated list so a deployed frontend can be allowed without
-        // editing code. Defaults to the local Vite dev server.
+        // editing code. Defaults to local dev server and the production frontend.
         String configured = environment.getProperty(
-                "CORS_ALLOWED_ORIGINS", "http://localhost:5173");
+                "CORS_ALLOWED_ORIGINS");
+        if (configured == null || configured.isBlank()) {
+            configured = "http://localhost:5173,https://frontend-five-self-66.vercel.app";
+        } else {
+            // Ensure production origin is always allowed if not present
+            if (!configured.contains("frontend-five-self-66.vercel.app")) {
+                configured = configured + ",https://frontend-five-self-66.vercel.app";
+            }
+        }
         List<String> origins = Stream.of(configured.split(","))
                 .map(String::trim)
                 .filter(origin -> !origin.isBlank())
                 .toList();
         this.allowedOrigins = origins.isEmpty()
-                ? List.of("http://localhost:5173")
+                ? List.of("http://localhost:5173", "https://frontend-five-self-66.vercel.app")
                 : origins;
     }
 
@@ -158,19 +166,21 @@ public class SecurityConfig {
 
         if (wildcard) {
             config.setAllowedOriginPatterns(List.of("*"));
+            config.setAllowCredentials(false);
         } else {
             config.setAllowedOrigins(allowedOrigins);
+            // Credentials are required for the HttpOnly refresh cookie that
+            // backs the "Remember me" option. Must use exact origins, not wildcard.
+            config.setAllowCredentials(true);
         }
 
         config.setAllowedMethods(
                 List.of("GET", "POST", "PUT", "PATCH",
-                        "DELETE", "OPTIONS"));
+                        "DELETE", "OPTIONS", "HEAD"));
 
-        config.setAllowedHeaders(List.of("*"));
+        config.setAllowedHeaders(List.of("Authorization", "Content-Type", "Accept", "Origin", "X-Requested-With"));
+        config.setExposedHeaders(List.of("Authorization", "Set-Cookie"));
 
-        // Credentials are required for the HttpOnly refresh cookie that
-        // backs the "Remember me" option.
-        config.setAllowCredentials(!wildcard);
         config.setMaxAge(3600L);
 
         UrlBasedCorsConfigurationSource source =
