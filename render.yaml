@@ -1,11 +1,10 @@
 services:
   - type: web
-    name: priyonix-erp-backend
-    env: java
+    name: priyonix-one-api
+    runtime: docker
     plan: free
-    rootDir: backend
-    buildCommand: ./mvnw clean package -DskipTests
-    startCommand: java -jar target/backend-0.0.1-SNAPSHOT.jar
+    rootDir: .
+    dockerfilePath: ./Dockerfile
     envVars:
       - key: JAVA_VERSION
         value: 21
