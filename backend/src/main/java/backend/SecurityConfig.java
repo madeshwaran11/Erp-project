@@ -17,9 +17,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+import org.springframework.web.filter.OncePerRequestFilter;
+
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import java.io.IOException;
 
 @Configuration
 public class SecurityConfig {
@@ -149,6 +153,7 @@ public class SecurityConfig {
                         .hasRole(UserRoles.ADMIN)
                 // Workspace controllers additionally enforce module and record ownership rules.
                 .anyRequest().authenticated())
+            .addFilterBefore(corsHeaderFilter(), org.springframework.security.web.header.HeaderWriterFilter.class)
             .addFilterBefore(corsFilter(), org.springframework.security.web.header.HeaderWriterFilter.class)
             .addFilterBefore(
                 jwtAuthenticationFilter,
@@ -198,5 +203,31 @@ public class SecurityConfig {
     @Bean
     public CorsFilter corsFilter() {
         return new CorsFilter(corsConfigurationSource());
+    }
+
+    @Bean
+    public OncePerRequestFilter corsHeaderFilter() {
+        return new OncePerRequestFilter() {
+            @Override
+            protected void doFilterInternal(jakarta.servlet.http.HttpServletRequest request,
+                                            jakarta.servlet.http.HttpServletResponse response,
+                                            FilterChain filterChain) throws ServletException, IOException {
+                String origin = request.getHeader("Origin");
+                if (origin != null && (origin.equals("https://frontend-five-self-66.vercel.app") 
+                        || origin.equals("http://localhost:5173"))) {
+                    response.setHeader("Access-Control-Allow-Origin", origin);
+                    response.setHeader("Access-Control-Allow-Credentials", "true");
+                    response.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE,OPTIONS,HEAD");
+                    response.setHeader("Access-Control-Allow-Headers", "Authorization,Content-Type,Accept,Origin,X-Requested-With");
+                    response.setHeader("Access-Control-Expose-Headers", "Authorization,Set-Cookie");
+                    response.setHeader("Access-Control-Max-Age", "3600");
+                }
+                if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+                    response.setStatus(jakarta.servlet.http.HttpServletResponse.SC_OK);
+                    return;
+                }
+                filterChain.doFilter(request, response);
+            }
+        };
     }
 }
